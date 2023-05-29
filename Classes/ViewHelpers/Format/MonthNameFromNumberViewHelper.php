@@ -80,7 +80,7 @@ class MonthNameFromNumberViewHelper extends AbstractViewHelper implements Single
                 $month .=  $this->arguments['suffix'];
             }
         } else {
-            $month = 0;
+            $month = '';
         }
         return $month;
     }

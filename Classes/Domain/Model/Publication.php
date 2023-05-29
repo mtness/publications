@@ -43,7 +43,7 @@ class Publication extends AbstractEntity
     /**
      * @var int
      */
-    protected int $year = '';
+    protected int $year = 0;
 
     /**
      * @var int
@@ -53,7 +53,7 @@ class Publication extends AbstractEntity
     /**
      * @var int
      */
-    protected int $day = '';
+    protected int $day = 0;
 
     /**
      * @var bool
