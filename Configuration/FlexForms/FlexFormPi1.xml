@@ -204,6 +204,40 @@
               </config>
             </TCEforms>
           </settings.timeframe>
+          <settings.timerangeStart>
+            <TCEforms>
+              <label>
+                LLL:EXT:publications/Resources/Private/Language/locallang_db.xlf:flexform.pi1.filter.timerange.start
+              </label>
+              <config>
+                <type>input</type>
+                <renderType>inputDateTime</renderType>
+                <dbType>date</dbType>
+                <eval>date</eval>
+                <size>12</size>
+                <default></default>
+              </config>
+              <!--<displayCond>FIELD:settings.displayMode:=:archive</displayCond>
+              <displayCond>FIELD:settings.displayMode:!=:calendar</displayCond>-->
+            </TCEforms>
+          </settings.timerangeStart>
+          <settings.timerangeEnd>
+            <TCEforms>
+              <label>
+                LLL:EXT:publications/Resources/Private/Language/locallang_db.xlf:flexform.pi1.filter.timerange.end
+              </label>
+              <config>
+                <type>input</type>
+                <renderType>inputDateTime</renderType>
+                <dbType>date</dbType>
+                <eval>date</eval>
+                <size>12</size>
+                <default></default>
+              </config>
+              <!--<displayCond>FIELD:settings.displayMode:=:archive</displayCond>
+              <displayCond>FIELD:settings.displayMode:!=:calendar</displayCond>-->
+            </TCEforms>
+          </settings.timerangeEnd>
           <settings.bibtypes>
             <TCEforms>
               <exclude>1</exclude>

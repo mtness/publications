@@ -46,9 +46,9 @@ class Publication extends AbstractEntity
     protected string $year = '';
 
     /**
-     * @var string
+     * @var int
      */
-    protected string $month = '';
+    protected int $month = 0;
 
     /**
      * @var string
@@ -450,18 +450,18 @@ class Publication extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getMonth(): string
+    public function getMonth(): int
     {
         return $this->month;
     }
 
     /**
-     * @param string $month
+     * @param int $month
      * @return Publication
      */
-    public function setMonth(string $month): self
+    public function setMonth(int $month): self
     {
         $this->month = $month;
         return $this;

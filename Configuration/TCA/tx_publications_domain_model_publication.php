@@ -400,8 +400,64 @@ $tca = [
             'exclude' => true,
             'label' => $llTable . '.month',
             'config' => [
-                'type' => 'input',
-                'size' => 2
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        $llTable . '.month.0',
+                        0
+                    ],
+                    [
+                        $llTable . '.month.1',
+                        1
+                    ],
+                    [
+                        $llTable . '.month.2',
+                        2
+                    ],
+                    [
+                        $llTable . '.month.3',
+                        3
+                    ],
+                    [
+                        $llTable . '.month.4',
+                        4
+                    ],
+                    [
+                        $llTable . '.month.5',
+                        5
+                    ],
+                    [
+                        $llTable . '.month.6',
+                        6
+                    ],
+                    [
+                        $llTable . '.month.7',
+                        7
+                    ],
+                    [
+                        $llTable . '.month.8',
+                        8
+                    ],
+                    [
+                        $llTable . '.month.9',
+                        9
+                    ],
+                    [
+                        $llTable . '.month.10',
+                        10
+                    ],
+                    [
+                        $llTable . '.month.11',
+                        11
+                    ],
+                    [
+                        $llTable . '.month.12',
+                        12
+                    ],
+                ],
+                'eval' => 'int',
+                //'size' => 2
             ]
         ],
         'day' => [
@@ -409,7 +465,8 @@ $tca = [
             'label' => $llTable . '.day',
             'config' => [
                 'type' => 'input',
-                'size' => 2
+                'size' => 2,
+                'eval' => 'int',
             ]
         ],
         'volume' => [
