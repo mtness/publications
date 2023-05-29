@@ -40,7 +40,7 @@ class MonthNameFromNumberViewHelper extends AbstractViewHelper implements Single
             if ($monthletter == 'feb') {
                 $month = '2';
             }
-            if ($monthletter == 'mar' || $monthletter == 'mär') {
+            if ($monthletter == 'mar') {
                 $month = '3';
             }
             if ($monthletter == 'apr') {
