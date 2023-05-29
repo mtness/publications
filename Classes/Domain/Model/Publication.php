@@ -41,9 +41,9 @@ class Publication extends AbstractEntity
     protected int $status = 0;
 
     /**
-     * @var string
+     * @var int
      */
-    protected string $year = '';
+    protected int $year = '';
 
     /**
      * @var int
@@ -51,9 +51,9 @@ class Publication extends AbstractEntity
     protected int $month = 0;
 
     /**
-     * @var string
+     * @var int
      */
-    protected string $day = '';
+    protected int $day = '';
 
     /**
      * @var bool
@@ -432,18 +432,18 @@ class Publication extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getYear(): string
+    public function getYear(): int
     {
         return $this->year;
     }
 
     /**
-     * @param string $year
+     * @param int $year
      * @return Publication
      */
-    public function setYear(string $year): self
+    public function setYear(int $year): self
     {
         $this->year = $year;
         return $this;
@@ -468,18 +468,18 @@ class Publication extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getDay(): string
+    public function getDay(): int
     {
         return $this->day;
     }
 
     /**
-     * @param string $day
+     * @param int $day
      * @return Publication
      */
-    public function setDay(string $day): self
+    public function setDay(int $day): self
     {
         $this->day = $day;
         return $this;
