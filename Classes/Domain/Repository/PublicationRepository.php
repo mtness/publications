@@ -26,6 +26,16 @@ class PublicationRepository extends AbstractRepository
         $this->filterQuery($query, $filter);
         $this->setOrderingsByFilterSettings($query, $filter);
         $results = $query->execute();
+
+/*
+$dbParser = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
+
+$doctrineQueryBuilder = $dbParser->convertQueryToDoctrineQueryBuilder($query);
+$sql = $doctrineQueryBuilder->getSQL();
+$parameters = $doctrineQueryBuilder->getParameters();
+\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(['sql' => $sql, 'parameters' => $parameters], __METHOD__ . ':' . __LINE__);
+*/
+
         return $this->convertToAscendingArray($results);
     }
 
@@ -42,6 +52,7 @@ class PublicationRepository extends AbstractRepository
             $and = $this->filterQueryByKeywords($query, $filter, $and);
             $and = $this->filterQueryByTags($query, $filter, $and);
             $and = $this->filterQueryByTimeframe($query, $filter, $and);
+            $and = $this->filterQueryByTimerange($query, $filter, $and);
             $and = $this->filterQueryByBibtypes($query, $filter, $and);
             $and = $this->filterQueryByStatus($query, $filter, $and);
             $and = $this->filterQueryByAuthor($query, $filter, $and);
@@ -109,6 +120,161 @@ class PublicationRepository extends AbstractRepository
     {
         if ($filter->isTimeFrameSet()) {
             $and[] = $query->greaterThan('year', $filter->getDateFromTimeFrame()->format('Y'));
+        }
+        return $and;
+    }
+
+    /**
+     * @param QueryInterface $query
+     * @param Filter $filter
+     * @param array $and
+     * @return array
+     * @throws InvalidQueryException
+     */
+    protected function filterQueryByTimerange(QueryInterface $query, Filter $filter, array $and): array
+    {
+        if ($filter->isTimerangeSet()) {
+            // exclusive (excluding the current)
+            $greaterMonths = [];
+            // inclusive (including the current)
+            $monthsUp = [];
+            // exclusive (excluding the current)
+            $lowerMonths = [];
+            // inclusive (including the current)
+            $monthsDown = [];
+            // exclusive (excluding the current ones)
+            $unionMonths = [];
+            // inclusive (including the current ones)
+            $allMonths = [];
+
+            for ($n = 1; $n <= 12; $n++) {
+                if ($filter->getTimerangeStart()) {
+                    if ($n > $filter->getTimerangeStart()->format('n')) {
+                        $greaterMonths[] = $n;
+                    }
+                    if ($n >= $filter->getTimerangeStart()->format('n')) {
+                        $monthsUp[] = $n;
+                    }
+                }
+                if ($filter->getTimerangeEnd()) {
+                    if ($n < (int) $filter->getTimerangeEnd()->format('n')) {
+                        $lowerMonths[] = $n;
+                    }
+                    if ($n <= (int) $filter->getTimerangeEnd()->format('n')) {
+                        $monthsDown[] = $n;
+                    }
+                }
+            }
+            for ($n = 1; $n <= 12; $n++) {
+                if (in_array($n, $greaterMonths) && in_array($n, $lowerMonths)) {
+                    $unionMonths[] = $n;
+                }
+                if (in_array($n, $monthsUp) && in_array($n, $monthsDown)) {
+                    $allMonths[] = $n;
+                }
+            }
+
+            if (count($allMonths)
+                && $filter->getTimerangeStart()
+                && $filter->getTimerangeEnd()
+                && $filter->getTimerangeStart()->format('Y') === $filter->getTimerangeEnd()->format('Y')
+            ) {
+
+                $and[] = $query->logicalAnd([
+                    // start
+                    $query->logicalOr([
+                        $query->logicalAnd([
+                            $query->equals('year', $filter->getTimerangeStart()->format('Y')),
+                            $query->logicalOr([
+                                $query->logicalAnd([
+                                    $query->logicalOr([
+                                        $query->equals('month', $filter->getTimerangeStart()->format('n')),
+                                        $query->equals('month', 0),
+                                    ]),
+                                    $query->logicalOr([
+                                        $query->greaterThanOrEqual('day', $filter->getTimerangeStart()->format('j')),
+                                        $query->equals('day', 0),
+                                    ]),
+                                ]),
+                                $query->logicalOr([
+                                    $query->in('month', $allMonths),
+                                    $query->equals('month', 0),
+                                ]),
+                            ]),
+                        ]),
+                        $query->greaterThan('year', $filter->getTimerangeStart()->format('Y')),
+                    ]),
+                    // end
+                    $query->logicalOr([
+                        $query->logicalAnd([
+                            $query->equals('year', $filter->getTimerangeEnd()->format('Y')),
+                            $query->logicalOr([
+                                $query->logicalAnd([
+                                    $query->logicalOr([
+                                        $query->equals('month', $filter->getTimerangeEnd()->format('n')),
+                                        $query->equals('month', 0),
+                                    ]),
+                                    $query->logicalOr([
+                                        $query->lessThanOrEqual('day', $filter->getTimerangeEnd()->format('j')),
+                                        $query->equals('day', 0),
+                                    ]),
+                                ]),
+                                $query->logicalOr([
+                                    $query->in('month', $allMonths),
+                                    $query->equals('month', 0),
+                                ]),
+                            ]),
+                        ]),
+                        $query->lessThan('year', $filter->getTimerangeEnd()->format('Y')),
+                    ]),
+                ]);
+
+            } else {
+
+                $and[] = $query->logicalAnd([
+                    // start
+                    $query->logicalOr([
+                        $query->logicalAnd([
+                            $query->equals('year', $filter->getTimerangeStart()->format('Y')),
+                            $query->logicalOr([
+                                $query->logicalAnd([
+                                    $query->logicalOr([
+                                        $query->equals('month', $filter->getTimerangeStart()->format('n')),
+                                        $query->equals('month', 0),
+                                    ]),
+                                    $query->logicalOr([
+                                        $query->greaterThanOrEqual('day', $filter->getTimerangeStart()->format('j')),
+                                        $query->equals('day', 0),
+                                    ]),
+                                ]),
+                                $query->equals('month', 0),
+                            ]),
+                        ]),
+                        $query->greaterThan('year', $filter->getTimerangeStart()->format('Y')),
+                    ]),
+                    // end
+                    $query->logicalOr([
+                        $query->logicalAnd([
+                            $query->equals('year', $filter->getTimerangeEnd()->format('Y')),
+                            $query->logicalOr([
+                                $query->logicalAnd([
+                                    $query->logicalOr([
+                                        $query->equals('month', $filter->getTimerangeEnd()->format('n')),
+                                        $query->equals('month', 0),
+                                    ]),
+                                    $query->logicalOr([
+                                        $query->lessThanOrEqual('day', $filter->getTimerangeEnd()->format('j')),
+                                        $query->equals('day', 0),
+                                    ]),
+                                ]),
+                                $query->equals('month', 0),
+                            ]),
+                        ]),
+                        $query->lessThan('year', $filter->getTimerangeEnd()->format('Y')),
+                    ]),
+                ]);
+            }
+
         }
         return $and;
     }

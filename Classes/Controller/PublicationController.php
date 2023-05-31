@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace In2code\Publications\Controller;
 
 use In2code\Publications\Domain\Model\Dto\Filter;
+use In2code\Publications\Domain\Model\Publication;
 use In2code\Publications\Domain\Repository\PublicationRepository;
 use In2code\Publications\Domain\Service\PublicationService;
 use In2code\Publications\Pagination\NumberedPagination;
@@ -107,9 +108,13 @@ class PublicationController extends ActionController
      * @return ResponseInterface
      * @throws InvalidQueryException
      */
-    public function downloadBibtexAction(Filter $filter): ResponseInterface
+    public function downloadBibtexAction(Filter $filter, Publication $publication = null): ResponseInterface
     {
-        $publications = $this->publicationRepository->findByFilter($filter);
+        if ($publication) {
+            $publications = [$publication];
+        } else {
+            $publications = $this->publicationRepository->findByFilter($filter);
+        }
         $this->view->assignMultiple([
             'filter' => $filter,
             'publications' => $publications
@@ -174,6 +179,9 @@ class PublicationController extends ActionController
         }
         if (!empty($filterArguments['year'])) {
             $filter->setYear((int)$filterArguments['year']);
+        }
+        if (!empty($filterArguments['author'])) {
+            $filter->setAuthor((string)(int)$filterArguments['author']);
         }
         if (!empty($filterArguments['authorstring'])) {
             $filter->setAuthorstring($filterArguments['authorstring']);

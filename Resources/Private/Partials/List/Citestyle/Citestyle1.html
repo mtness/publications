@@ -9,6 +9,7 @@
 
 	<div>
 		<f:render section="bibtype_{publication.bibtype}" optional="1" arguments="{_all}"/>
+		<f:render partial="List/ItemOptions" optional="1" arguments="{_all}"/>
 	</div>
 </div>
 
@@ -310,9 +311,25 @@
 </f:spaceless></f:section>
 
 <f:section name="authorDefault"><f:spaceless>
-	<publications:format.highlightAuthor author="{author}" before="<b>" after="</b>" searchterms="{settings.author}" authorstring="{filter.authorstring}" settings="{settings}" >
-		<publications:format.initials>{author.firstName}</publications:format.initials> {author.lastName}
-	</publications:format.highlightAuthor>
+  <f:link.action action="list" arguments="{filter: {author: author}}">
+	  <f:if condition="{filter.authorstring}">
+		  <f:then>
+				<publications:format.highlightAuthor author="{author}" before="<b>" after="</b>" searchterms="{settings.author}" authorstring="{filter.authorstring}" settings="{settings}" >
+					<publications:format.initials>{author.firstName}</publications:format.initials> {author.lastName}
+				</publications:format.highlightAuthor>
+			</f:then>
+			<f:else>
+				<f:if condition="{filter.author} == {author.uid}">
+					<f:then>
+						<b><publications:format.initials>{author.firstName}</publications:format.initials> {author.lastName}</b>
+					</f:then>
+					<f:else>
+						<publications:format.initials>{author.firstName}</publications:format.initials> {author.lastName}
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:link.action>
 </f:spaceless></f:section>
 
 </html>

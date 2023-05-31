@@ -130,6 +130,45 @@
 			<trans-unit id="tx_publications_domain_model_publication.month">
 				<source>Month</source>
 			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.0">
+				<source>-- Select Month --</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.1">
+				<source>January</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.2">
+				<source>February</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.3">
+				<source>March</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.4">
+				<source>April</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.5">
+				<source>May</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.6">
+				<source>June</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.7">
+				<source>July</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.8">
+				<source>August</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.9">
+				<source>September</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.10">
+				<source>October</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.11">
+				<source>November</source>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.12">
+				<source>December</source>
+			</trans-unit>
 			<trans-unit id="tx_publications_domain_model_publication.day">
 				<source>Day</source>
 			</trans-unit>
@@ -294,6 +333,12 @@
 			</trans-unit>
 			<trans-unit id="flexform.pi1.filter.timeframe.0">
 				<source>all</source>
+			</trans-unit>
+			<trans-unit id="flexform.pi1.filter.timerange.start">
+				<source>Show publications starting with this date or later</source>
+			</trans-unit>
+			<trans-unit id="flexform.pi1.filter.timerange.end">
+				<source>Show publications before this date</source>
 			</trans-unit>
 			<trans-unit id="flexform.pi1.filter.bibtypes">
 				<source>Publication status (empty = all)</source>

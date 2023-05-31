@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
 	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-08-01T12:00:00Z" product-name="publications">
 		<header/>
@@ -171,6 +170,58 @@
 			<trans-unit id="tx_publications_domain_model_publication.month">
 				<source>Month</source>
 				<target state="translated">Monat</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.0">
+				<source>-- Select Month --</source>
+				<target>-- Auswahl Monat --</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.1">
+				<source>January</source>
+				<target>Januar</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.2">
+				<source>February</source>
+				<target>Februar</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.3">
+				<source>March</source>
+				<target>März</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.4">
+				<source>April</source>
+				<target>April</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.5">
+				<source>May</source>
+				<target>Mai</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.6">
+				<source>June</source>
+				<target>Juni</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.7">
+				<source>July</source>
+				<target>Juli</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.8">
+				<source>August</source>
+				<target>August</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.9">
+				<source>September</source>
+				<target>September</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.10">
+				<source>October</source>
+				<target>Oktober</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.11">
+				<source>November</source>
+				<target>November</target>
+			</trans-unit>
+			<trans-unit id="tx_publications_domain_model_publication.month.12">
+				<source>December</source>
+				<target>Dezember</target>
 			</trans-unit>
 			<trans-unit id="tx_publications_domain_model_publication.day">
 				<source>Day</source>
@@ -382,6 +433,15 @@
 			<trans-unit id="flexform.pi1.filter.timeframe.0">
 				<source>all</source>
 				<target state="translated">alle</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi1.filter.timerange.start">
+				<source>Show publications starting with this date or later</source>
+				<target>Zeige Publikationen beginnend mit diesem Datum</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi1.filter.timerange.end">
+				<source>Show publications before this date</source>
+				<target>Zeige Events bevor diesem Datum</target>
+				<target></target>
 			</trans-unit>
 			<trans-unit id="flexform.pi1.filter.bibtypes">
 				<source>Publication status (empty = all)</source>

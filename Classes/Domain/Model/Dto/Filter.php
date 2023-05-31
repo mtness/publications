@@ -42,6 +42,21 @@ class Filter
     protected int $timeframe = 0;
 
     /**
+     * @var ?\DateTime
+     */
+    protected ?\DateTime $timerangeStart = null;
+
+    /**
+     * @var ?\DateTime
+     */
+    protected ?\DateTime $timerangeEnd = null;
+
+    /**
+     * @var array
+     */
+    protected array $timerange = ['start' => null, 'end' => null];
+
+    /**
      * @var array
      */
     protected array $bibtypes = [];
@@ -124,6 +139,8 @@ class Filter
         $this->setGroupby((int)$settings['groupby']);
         $this->setRecordsPerPage((int)$settings['recordsPerPage']);
         $this->setTimeframe((int)$settings['timeframe']);
+        $this->setTimerangeStart($settings['timerangeStart']);
+        $this->setTimerangeEnd($settings['timerangeEnd']);
         $this->setBibtypes(GeneralUtility::trimExplode(',', $settings['bibtypes'], true));
         $this->setStatus(GeneralUtility::intExplode(',', $settings['status'], true));
         $this->setKeywords(GeneralUtility::trimExplode(PHP_EOL, $settings['keywords'], true));
@@ -283,6 +300,70 @@ class Filter
     {
         $this->timeframe = $timeframe;
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function setTimerangeStart(string $timerangeStart): void
+    {
+        if ($timerangeStart) {
+            $this->timerangeStart = new \DateTime($timerangeStart);
+        }
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTimerangeStart(): ?\DateTime
+    {
+        return $this->timerangeStart;
+    }
+
+    /**
+     * @return void
+     */
+    public function setTimerangeEnd(string $timerangeEnd): void
+    {
+        if ($timerangeEnd) {
+            $this->timerangeEnd = new \DateTime($timerangeEnd);
+        }
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTimerangeEnd(): ?\DateTime
+    {
+        return $this->timerangeEnd;
+    }
+
+    /**
+     * @return void
+     */
+    public function setTimerange(array $timerange): void
+    {
+        $this->setTimerangeStart($timerange['start']);
+        $this->setTimerangeEnd($timerange['end']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTimerange(): array
+    {
+        return [
+            'start' => $this->timerangeStart,
+            'end' => $this->timerangeEnd,
+        ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTimerangeSet(): bool
+    {
+        return $this->timerangeStart !== null || $this->timerangeEnd !== null;
     }
 
     /**
