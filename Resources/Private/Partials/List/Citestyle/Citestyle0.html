@@ -409,8 +409,18 @@
 </f:spaceless></f:section>
 
 <f:section name="authorDefault"><f:spaceless>
-	{author.lastName}<f:if condition="{author.lastName} && {author.firstName}">,</f:if>
-	{author.firstName}
+  <f:link.action action="list" arguments="{filter: {author: author}}">
+		<f:if condition="{filter.author} == {author.uid}">
+			<f:then>
+				<b>{author.lastName}<f:if condition="{author.lastName} && {author.firstName}">,</f:if>
+				{author.firstName}</b>
+			</f:then>
+			<f:else>
+				{author.lastName}<f:if condition="{author.lastName} && {author.firstName}">,</f:if>
+				{author.firstName}
+			</f:else>
+		</f:if>
+	</f:link.action>
 </f:spaceless></f:section>
 
 <f:section name="title">

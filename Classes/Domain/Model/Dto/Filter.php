@@ -307,13 +307,15 @@ class Filter
      */
     public function setTimerangeStart(string $timerangeStart): void
     {
-        $this->timerangeStart = new \DateTime($timerangeStart);
+        if ($timerangeStart) {
+            $this->timerangeStart = new \DateTime($timerangeStart);
+        }
     }
 
     /**
      * @return \DateTime
      */
-    public function getTimerangeStart(): \DateTime
+    public function getTimerangeStart(): ?\DateTime
     {
         return $this->timerangeStart;
     }
@@ -323,13 +325,15 @@ class Filter
      */
     public function setTimerangeEnd(string $timerangeEnd): void
     {
-        $this->timerangeEnd = new \DateTime($timerangeEnd);
+        if ($timerangeEnd) {
+            $this->timerangeEnd = new \DateTime($timerangeEnd);
+        }
     }
 
     /**
      * @return \DateTime
      */
-    public function getTimerangeEnd(): \DateTime
+    public function getTimerangeEnd(): ?\DateTime
     {
         return $this->timerangeEnd;
     }
@@ -359,7 +363,7 @@ class Filter
      */
     public function isTimerangeSet(): bool
     {
-        return is_object($this->getTimerangeStart()) || is_object($this->getTimerangeEnd());
+        return $this->timerangeStart !== null || $this->timerangeEnd !== null;
     }
 
     /**

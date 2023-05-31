@@ -259,9 +259,25 @@ Pohl S, Kellner A, Muster MR, Stein SS.
 </f:spaceless></f:section>
 
 <f:section name="authorDefault"><f:spaceless>
-	<publications:format.highlightAuthor author="{author}" before="<b>" after="</b>" searchterms="{settings.author}" authorstring="{filter.authorstring}" settings="{settings}" >
-		{author.lastName}&nbsp;<publications:format.initials glue='' suffix=''>{author.firstName}</publications:format.initials>
-	</publications:format.highlightAuthor>
+	<f:link.action action="list" arguments="{filter: {author: author}}">
+	  <f:if condition="{filter.authorstring}">
+		  <f:then>
+				<publications:format.highlightAuthor author="{author}" before="<b>" after="</b>" searchterms="{settings.author}" authorstring="{filter.authorstring}" settings="{settings}" >
+					{author.lastName}&nbsp;<publications:format.initials glue='' suffix=''>{author.firstName}</publications:format.initials>
+				</publications:format.highlightAuthor>
+			</f:then>
+			<f:else>
+				<f:if condition="{filter.author} == {author.uid}">
+					<f:then>
+						<b>{author.lastName}&nbsp;<publications:format.initials glue='' suffix=''>{author.firstName}</publications:format.initials></b>
+					</f:then>
+					<f:else>
+						{author.lastName}&nbsp;<publications:format.initials glue='' suffix=''>{author.firstName}</publications:format.initials>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:link.action>
 </f:spaceless></f:section>
 
 </html>

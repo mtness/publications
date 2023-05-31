@@ -133,46 +133,52 @@ $parameters = $doctrineQueryBuilder->getParameters();
      */
     protected function filterQueryByTimerange(QueryInterface $query, Filter $filter, array $and): array
     {
-        // exclusive (excluding the current)
-        $greaterMonths = [];
-        // inclusive (including the current)
-        $monthsUp = [];
-        // exclusive (excluding the current)
-        $lowerMonths = [];
-        // inclusive (including the current)
-        $monthsDown = [];
-        // exclusive (excluding the current ones)
-        $unionMonths = [];
-        // inclusive (including the current ones)
-        $allMonths = [];
-        for ($n = 1; $n <= 12; $n++) {
-            if ($n > $filter->getTimerangeStart()->format('n')) {
-                $greaterMonths[] = $n;
-            }
-            if ($n < (int) $filter->getTimerangeEnd()->format('n')) {
-                $lowerMonths[] = $n;
-            }
-            if ($n >= $filter->getTimerangeStart()->format('n')) {
-                $monthsUp[] = $n;
-            }
-            if ($n <= (int) $filter->getTimerangeEnd()->format('n')) {
-                $monthsDown[] = $n;
-            }
-        }
-        for ($n = 1; $n <= 12; $n++) {
-            if (in_array($n, $greaterMonths) && in_array($n, $lowerMonths)) {
-                $unionMonths[] = $n;
-            }
-            if (in_array($n, $monthsUp) && in_array($n, $monthsDown)) {
-                $allMonths[] = $n;
-            }
-        }
-
-        //debug(['$greaterMonths' => $greaterMonths, '$lowerMonths' => $lowerMonths, '$unionMonths' => $unionMonths, '$allMonths' => $allMonths]);
-
         if ($filter->isTimerangeSet()) {
+            // exclusive (excluding the current)
+            $greaterMonths = [];
+            // inclusive (including the current)
+            $monthsUp = [];
+            // exclusive (excluding the current)
+            $lowerMonths = [];
+            // inclusive (including the current)
+            $monthsDown = [];
+            // exclusive (excluding the current ones)
+            $unionMonths = [];
+            // inclusive (including the current ones)
+            $allMonths = [];
 
-            if (count($allMonths)) {
+            for ($n = 1; $n <= 12; $n++) {
+                if ($filter->getTimerangeStart()) {
+                    if ($n > $filter->getTimerangeStart()->format('n')) {
+                        $greaterMonths[] = $n;
+                    }
+                    if ($n >= $filter->getTimerangeStart()->format('n')) {
+                        $monthsUp[] = $n;
+                    }
+                }
+                if ($filter->getTimerangeEnd()) {
+                    if ($n < (int) $filter->getTimerangeEnd()->format('n')) {
+                        $lowerMonths[] = $n;
+                    }
+                    if ($n <= (int) $filter->getTimerangeEnd()->format('n')) {
+                        $monthsDown[] = $n;
+                    }
+                }
+            }
+            for ($n = 1; $n <= 12; $n++) {
+                if (in_array($n, $greaterMonths) && in_array($n, $lowerMonths)) {
+                    $unionMonths[] = $n;
+                }
+                if (in_array($n, $monthsUp) && in_array($n, $monthsDown)) {
+                    $allMonths[] = $n;
+                }
+            }
+
+            if (count($allMonths)
+                && $filter->getTimerangeStart()
+                && $filter->getTimerangeEnd()
+                && $filter->getTimerangeStart()->format('Y') === $filter->getTimerangeEnd()->format('Y')
+            ) {
 
                 $and[] = $query->logicalAnd([
                     // start

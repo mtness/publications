@@ -180,6 +180,9 @@ class PublicationController extends ActionController
         if (!empty($filterArguments['year'])) {
             $filter->setYear((int)$filterArguments['year']);
         }
+        if (!empty($filterArguments['author'])) {
+            $filter->setAuthor((string)(int)$filterArguments['author']);
+        }
         if (!empty($filterArguments['authorstring'])) {
             $filter->setAuthorstring($filterArguments['authorstring']);
         }
